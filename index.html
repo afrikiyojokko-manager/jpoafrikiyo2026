@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFRIKIYO - Rejoignez-nous ! | JPO 2026</title>
+    <style>
+        :root {
+            --bordeaux: #421a21;
+            --rouille: #a35620;
+            --orange: #fc9c28;
+            --sable: #e2b46c;
+            --blanc: #FFFFFF;
+            --noir: #000000;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--blanc);
+            color: var(--noir);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(30,58,138,0.1));
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 3px solid var(--or);
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            color: var(--bordeaux);
+            font-size: 2.5em;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            color: var(--rouille);
+            font-size: 1.1em;
+            margin: 10px 0 0;
+        }
+        
+        .description {
+            background-color: rgba(212, 175, 55, 0.1);
+            padding: 15px;
+            border-left: 5px solid var(--or);
+            margin-bottom: 30px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .profile-selector {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-card.selected {
+            border-color: var(--orange);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+        
+        .profile-card.partenaire {
+            background-color: rgba(30, 58, 138, 0.1);
+        }
+        
+        .profile-card.choriste {
+            background-color: rgba(5, 150, 105, 0.1);
+        }
+        
+        .profile-card.ami {
+            background-color: rgba(139, 69, 19, 0.1);
+        }
+        
+        .profile-card h3 {
+            color: var(--noir);
+            margin-top: 0;
+        }
+        
+        .profile-card p {
+            font-size: 0.9em;
+            color: var(--bordeaux);
+        }
+        
+        .profile-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .form-section {
+            display: none;
+            background-color: var(--blanc);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--bordeaux);
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--sable);
+            outline: none;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        .radio-group input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .btn {
+            background-color: var(--bordeaux);
+            color: var(--blanc);
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-align: center;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background-color: var(--or);
+            color: var(--noir);
+        }
+        
+        .btn-secondary {
+            background-color: var(--ocre);
+            color: var(--blanc);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--orange);
+        }
+        
+        .section-title {
+            color: var(--bordeaux);
+            border-bottom: 2px solid var(--sable);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .required {
+            color: var(--sable);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: var(--bordeaux);
+            font-size: 0.9em;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-selector {
+                flex-direction: column;
+            }
+            .profile-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AFRIKIYO</h1>
+            <p>Héritage - Transmission - Renaissance</p>
+        </header>
+        
+        <div class="description">
+            <strong>Journée Portes Ouvertes 2026</strong> – Rejoignez-nous selon votre profil !
+        </div>
+        
+        <div class="profile-selector">
+            <div class="profile-card partenaire" onclick="selectProfile('partenaire')">
+                <div class="profile-icon">🏢</div>
+                <h3>Partenaire / Collaborateur</h3>
+                <p>Entreprise, institution, ambassade, ONG, média...</p>
+            </div>
+            
+            <div class="profile-card choriste" onclick="selectProfile('choriste')">
+                <div class="profile-icon">🎤</div>
+                <h3>Choriste / Instrumentiste</h3>
+                <p>Rejoindre AFRIKIYO, auditionner, se former...</p>
+            </div>
+            
+            <div class="profile-card ami" onclick="selectProfile('ami')">
+                <div class="profile-icon">💙</div>
+                <h3>Réseau Amis d'AFRIKIYO</h3>
+                <p>Soutenir notre mission (adhésion, don, bénévolat)...</p>
+            </div>
+        </div>
+        
+        <!-- Section Partenaire -->
+        <div id="partenaire-section" class="form-section">
+            <h2 class="section-title">Formulaire Partenaire / Collaborateur</h2>
+            
+            <form id="partenaire-form" onsubmit="submitForm('partenaire')">
+                <div class="form-group">
+                    <label for="partenaire-nom">Nom/Prénom <span class="required">*</span></label>
+                    <input type="text" id="partenaire-nom" name="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-organisation">Organisation <span class="required">*</span></label>
+                    <input type="text" id="partenaire-organisation" name="organisation" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-email">Email <span class="required">*</span></label>
+                    <input type="email" id="partenaire-email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-telephone">Téléphone</label>
+                    <input type="tel" id="partenaire-telephone" name="telephone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-secteur">Secteur d'activité <span class="required">*</span></label>
+                    <select id="partenaire-secteur" name="secteur" required>
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="institution">Institution publique</option>
+                        <option value="ambassade">Ambassade</option>
+                        <option value="ong">ONG</option>
+                        <option value="entreprise">Entreprise privée</option>
+                        <option value="media">Média</option>
+                        <option value="artiste">Artiste / Collectif</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-projet">Votre projet ou idée de collaboration <span class="required">*</span></label>
+                    <textarea id="partenaire-projet" name="projet" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Domaine(s) de collaboration</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="domaine" value="evenementiel"> Événementiel (concerts, festivals, cérémonies)</label>
+                        <label><input type="checkbox" name="domaine" value="pedagogie"> Formation (ateliers, stages)</label>
+                        <label><input type="checkbox" name="domaine" value="production"> Production (film, albums, clips)</label>
+                        <label><input type="checkbox" name="domaine" value="innovation"> Innovation (son & lumière, vidéo mapping)</label>
+                        <label><input type="checkbox" name="domaine" value="patrimoine"> Patrimoine (collecte, transcription, valorisation)</label>
+                        <label><input type="checkbox" name="domaine" value="recherche"> Recherche (colloques, études)</label>
+                        <label><input type="checkbox" name="domaine" value="autre"> Autre <input type="text" name="domaine_autre" placeholder="Précisez"></label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Type de soutien envisagé</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="soutien" value="financier"> Financier (mécénat, sponsoring)</label>
+                        <label><input type="checkbox" name="soutien" value="technique"> Technique (logistique, son, vidéo)</label>
+                        <label><input type="checkbox" name="soutien" value="artistique"> Artistique (co-création, résidences)</label>
+                        <label><input type="checkbox" name="soutien" value="mediatique"> Médiatique (communication, couverture)</label>
+                        <label><input type="checkbox" name="soutien" value="autre"> Autre <input type="text" name="soutien_autre" placeholder="Précisez"></label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-budget">Budget indicatif (optionnel)</label>
+                    <select id="partenaire-budget" name="budget">
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="moins_500k">Moins de 500 000 FCFA</option>
+                        <option value="500k_2M">500 000 – 2M FCFA</option>
+                        <option value="2M_5M">2M – 5M FCFA</option>
+                        <option value="plus_5M">Plus de 5M FCFA</option>
+                        <option value="a_discuter">À discuter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Disponibilité pour un échange</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="disponibilite" value="oui" checked> Oui, sous 15 jours</label>
+                        <label><input type="radio" name="disponibilite" value="non"> Non, mais restons en contact</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partenaire-message">Message pour AFRIKIYO (1 phrase)</label>
+                    <textarea id="partenaire-message" name="message" rows="2"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn">Soumettre</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Annuler</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Section Choriste -->
+        <div id="choriste-section" class="form-section">
+            <h2 class="section-title">Formulaire Choriste / Instrumentiste</h2>
+            
+            <form id="choriste-form" onsubmit="submitForm('choriste')">
+                <div class="form-group">
+                    <label for="choriste-nom">Nom/Prénom <span class="required">*</span></label>
+                    <input type="text" id="choriste-nom" name="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="choriste-email">Email <span class="required">*</span></label>
+                    <input type="email" id="choriste-email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="choriste-telephone">Téléphone</label>
+                    <input type="tel" id="choriste-telephone" name="telephone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="choriste-age">Âge (optionnel)</label>
+                    <input type="number" id="choriste-age" name="age" min="5" max="120">
+                </div>
+                
+                <div class="form-group">
+                    <label>Type de participation <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="type" value="choriste" required> Choriste</label>
+                        <label><input type="checkbox" name="type" value="instrumentiste"> Instrumentiste (précisez : <input type="text" name="instrument" placeholder="kora, djembé, etc."></label>
+                        <label><input type="checkbox" name="type" value="slameur"> Slameur / Poète</label>
+                        <label><input type="checkbox" name="type" value="danseur"> Danseur</label>
+                        <label><input type="checkbox" name="type" value="autre"> Autre <input type="text" name="type_autre" placeholder="Précisez"></label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Niveau <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="niveau" value="debutant" required> Débutant (pas d'expérience)</label>
+                        <label><input type="radio" name="niveau" value="intermediaire"> Intermédiaire (expérience en groupe/école)</label>
+                        <label><input type="radio" name="niveau" value="confirme"> Confirmé (expérience professionnelle)</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Disponibilités</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="dispo" value="weekend"> Week-ends</label>
+                        <label><input type="checkbox" name="dispo" value="soir"> Soirs en semaine</label>
+                        <label><input type="checkbox" name="dispo" value="feries"> Jours fériés</label>
+                        <label><input type="checkbox" name="dispo" value="flexible"> Flexible</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Intérêts spécifiques</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="interet" value="choeur_adulte"> Chœur adulte</label>
+                        <label><input type="checkbox" name="interet" value="choeur_enfant"> Chœur enfant/jeune</label>
+                        <label><input type="checkbox" name="interet" value="choeur_scolaire"> Chœur scolaire/universitaire</label>
+                        <label><input type="checkbox" name="interet" value="choeur_communautaire"> Chœur communautaire/régional</label>
+                        <label><input type="checkbox" name="interet" value="atelier"> Ateliers de formation</label>
+                        <label><input type="checkbox" name="interet" value="spectacle"> Participation à des spectacles</label>
+                        <label><input type="checkbox" name="interet" value="enregistrement"> Enregistrement en studio</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Audition</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="audition" value="oui" checked> Je souhaite passer une audition</label>
+                        <label><input type="radio" name="audition" value="non"> Je préfère commencer par un atelier découverte</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="choriste-motivation">Motivation (1 phrase)</label>
+                    <textarea id="choriste-motivation" name="motivation" rows="2"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="choriste-experience">Expérience précédente (optionnel)</label>
+                    <textarea id="choriste-experience" name="experience" rows="2"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn">Soumettre</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Annuler</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Section Ami -->
+        <div id="ami-section" class="form-section">
+            <h2 class="section-title">Formulaire Réseau Amis d'AFRIKIYO</h2>
+            
+            <form id="ami-form" onsubmit="submitForm('ami')">
+                <div class="form-group">
+                    <label for="ami-nom">Nom/Prénom <span class="required">*</span></label>
+                    <input type="text" id="ami-nom" name="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ami-email">Email <span class="required">*</span></label>
+                    <input type="email" id="ami-email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ami-telephone">Téléphone</label>
+                    <input type="tel" id="ami-telephone" name="telephone">
+                </div>
+                
+                <div class="form-group">
+                    <label>Type de soutien <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="soutien" value="adhesion" required> Adhésion (devenir membre officiel)</label>
+                        <label><input type="checkbox" name="soutien" value="don"> Don financier (ponctuel ou récurrent)</label>
+                        <label><input type="checkbox" name="soutien" value="benevolat"> Bénévolat (précisez : <input type="text" name="benevolat_competence" placeholder="communication, logistique, etc."></label>
+                        <label><input type="checkbox" name="soutien" value="film"> Soutien au projet film</label>
+                        <label><input type="checkbox" name="soutien" value="autre"> Autre <input type="text" name="soutien_autre" placeholder="Précisez"></label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ami-montant">Montant du don (optionnel, si applicable)</label>
+                    <select id="ami-montant" name="montant">
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="5k_20k">5 000 – 20 000 FCFA</option>
+                        <option value="20k_50k">20 000 – 50 000 FCFA</option>
+                        <option value="50k_100k">50 000 – 100 000 FCFA</option>
+                        <option value="plus_100k">Plus de 100 000 FCFA</option>
+                        <option value="a_discuter">Je préfère discuter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ami-competences">Compétences à partager (optionnel)</label>
+                    <textarea id="ami-competences" name="competences" rows="2"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ami-message">Message de soutien (1 phrase)</label>
+                    <textarea id="ami-message" name="message" rows="2"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn">Soumettre</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Annuler</button>
+                </div>
+            </form>
+        </div>
+        
+        <footer>
+            <p>Merci de faire partie de l'aventure AFRIKIYO ! 🎶</p>
+            <p><strong>Contact :</strong> contact@afrikiyo.org | <strong>Site web :</strong> <a href="https://www.afrikiyo.org" target="_blank">www.afrikiyo.org</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // URL de votre application web Google Apps Script (à remplacer)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUSfUfF_Z_khMEXdvL7bCtVpE_J-wsg5GSASp7p598doPXKAQrZ4U5cSogHNOF3BWBbw/exec";
+        
+        // Sélection du profil
+        function selectProfile(profile) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelector('.profile-selector').style.display = 'none';
+            document.getElementById(profile + '-section').classList.add('active');
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector('.profile-card.' + profile).classList.add('selected');
+        }
+        
+        // Réinitialisation du formulaire
+        function resetForm() {
+            document.querySelector('.profile-selector').style.display = 'flex';
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('partenaire-form').reset();
+            document.getElementById('choriste-form').reset();
+            document.getElementById('ami-form').reset();
+        }
+        
+        // Soumission du formulaire
+        async function submitForm(profile) {
+            event.preventDefault();
+            const form = document.getElementById(profile + '-form');
+            
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const formData = new FormData(form);
+            const data = { profile: profile };
+            
+            // Collecte des données
+            for (let [key, value] of formData.entries()) {
+                if (formData.getAll(key).length > 1) {
+                    data[key] = formData.getAll(key).join(", ");
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            try {
+                // Envoi des données à Google Sheets (si SCRIPT_URL est configuré)
+                if (SCRIPT_URL !== "https://script.google.com/macros/s/VOTRE_ID/exec") {
+                    await fetch(SCRIPT_URL, {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+                }
+                
+                alert("Merci pour votre soumission ! Nous vous contacterons rapidement.");
+                resetForm();
+            } catch (error) {
+                console.error("Erreur :", error);
+                alert("Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
+            }
+        }
+    </script>
+</body>
+</html>
